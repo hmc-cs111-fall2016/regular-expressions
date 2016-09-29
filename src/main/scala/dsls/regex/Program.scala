@@ -1,24 +1,28 @@
 package dsls.regex
 
+import scala.language.postfixOps
+
 object Program extends App {
   
+  import RegularExpression._
+  
   /****************************************************************************
-   * TODO: Extend characters to support regular expressions
+   * Extend characters to support regular expressions
    * 
    * Make it possible to replace the definition of the numbers with:
    *   val zero = '0'
    * etc.
    ***************************************************************************/
-  val zero  = Literal('0')
-  val one   = Literal('1')
-  val two   = Literal('2')
-  val three = Literal('3')
-  val four  = Literal('4')
-  val five  = Literal('5')
-  val six   = Literal('6')
-  val seven = Literal('7')
-  val eight = Literal('8')
-  val nine  = Literal('9')
+  val zero  = '0'
+  val one   = '1'
+  val two   = '2'
+  val three = '3'
+  val four  = '4'
+  val five  = '5'
+  val six   = '6'
+  val seven = '7'
+  val eight = '8'
+  val nine  = '9'
   
   require(zero matches "0")
   require(one matches "1")
@@ -32,23 +36,22 @@ object Program extends App {
   require(nine matches "9")
   
   /****************************************************************************
-   * TODO: Extend strings to support regular expressions
+   * Extend strings to support regular expressions
    * 
    * Make it possible to replace the definition of answer with:
    *   val answer = "42"
    ***************************************************************************/
-  val answer = Concat(four, two)
+  val answer = "42"
 
   require(answer matches "42")
               
   /****************************************************************************
-   * TODO: Add the union operator for regular expressions
+   * Add the union operator for regular expressions
    * 
    * Make it possible to replace the definition of digit with:
    *   val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
    ***************************************************************************/
-  val digit = Union(zero, Union(one, Union(two, Union(three, Union(four, 
-              Union(five, Union(six, Union(seven, Union(eight, nine)))))))))
+  val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
 
   require(digit matches "0")
   require(digit matches "1")
@@ -62,22 +65,22 @@ object Program extends App {
   require(digit matches "9")      
 
   /****************************************************************************
-   * TODO: Add the concatenation operator for regular expressions
+   * Add the concatenation operator for regular expressions
    * 
    * Make it possible to replace the definition of digit with:
    *   val pi = '3' ~ '1' ~ '4'
    ***************************************************************************/
-  val pi = Concat(Literal('3'), Concat(Literal('1'), Literal('4')))
+  val pi = '3' ~ '1' ~ '4'
 
   require(pi matches "314")
   
   /****************************************************************************
-   * TODO: Add the star operator for regular expressions
+   * Add the star operator for regular expressions
    * 
    * Make it possible to replace the definition of zeroOrMoreDigits with:
    *   val zeroOrMoreDigits = digit <*>
    ***************************************************************************/
-  val zeroOrMoreDigits = Star(digit)
+  val zeroOrMoreDigits = digit <*>
   
   require(zeroOrMoreDigits matches "")
   require(zeroOrMoreDigits matches "0")
@@ -89,9 +92,9 @@ object Program extends App {
    * TODO: Add the plus operator for regular expressions
    * 
    * Make it possible to replace the definition of number with:
-   *   val number = digit <+> 
+   *   val number = digit <+>
    ***************************************************************************/
-  val number = Concat(digit, zeroOrMoreDigits)
+  val number = digit <+>
   
   require(!(number matches ""))
   require(number matches "0")
@@ -99,13 +102,13 @@ object Program extends App {
   require(number matches "09")
   require(number matches "987651234")
 
-  /****************************************************************************
-   * TODO: Add the repetition operator for regular expressions
+   /****************************************************************************
+   * Add the repetition operator for regular expressions
    * 
    * Make it possible to replace the definition of cThree with:
    *    val cThree = 'c'{3}
    ***************************************************************************/
-  val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
+  val cThree = 'c'{3}
   
   require(cThree matches "ccc")
   
@@ -115,9 +118,7 @@ object Program extends App {
    * the following several definitions with:
    *   val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
    ***************************************************************************/
-  val aStar = Star(Literal('a'))
-  val bPlus = Concat(Literal('b'), Star(Literal('b')))
-  val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
+  val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
   
   require(pattern matches "42")
   require(pattern matches "bccc")
@@ -133,13 +134,7 @@ object Program extends App {
    * the following several definitions with:
    *   val helloworld = ("hello" <*>) ~ "world"
    ***************************************************************************/
-  val hello = Concat(Literal('h'), Concat(Literal('e'), Concat(Literal('l'), 
-              Concat(Literal('l'), Literal('o'))))) 
-  
-  val world = Concat(Literal('w'), Concat(Literal('o'), Concat(Literal('r'), 
-              Concat(Literal('l'), Literal('d'))))) 
-
-  val helloworld = Concat(Star(hello), world)
+  val helloworld = ("hello" <*>) ~ "world"
   
   require(helloworld matches "helloworld")
   require(helloworld matches "world")
@@ -152,10 +147,7 @@ object Program extends App {
    * the following several definitions with:
    *   val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
    ***************************************************************************/
-  val threeDigits = Concat(digit, Concat(digit, digit))
-  val fourDigits = Concat(threeDigits, digit)
-  val areaCode = Concat(Literal('('), Concat(threeDigits, Literal(')')))
-  val telNumber = Concat(areaCode, Concat(threeDigits, Concat(Literal('-'), fourDigits)))
+  val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
   
   require(telNumber matches "(202)456-1111")
 }
