@@ -87,7 +87,8 @@ This repository contains some starter code. The most important pieces are:
 
 **`RegularExpression.scala`** This file defines data structures that correspond
 to the different kinds of regular languages described above. You'll modify this
-file to write your DSL.
+file to write your DSL. The final version should look like 
+[this](https://github.com/hmc-cs111-fall2016/practice-scala/wiki/Final-program).
 
 **`Program.scala`** A program that uses the data structures in
 `RegularExpresion.scala` to build descriptions of regular expressions, then
@@ -109,7 +110,7 @@ won't need to modify these files.
 The user of your DSL eventually should be able to write the following pattern:
 
 ```
-"42" || ( ('a'*) ~ ('b'+) ~ ('c'{3}))
+"42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
 ```
 
 which matches either:
@@ -125,8 +126,8 @@ To do so, you'll need to:
    + implement the binary operator `||`, which corresponds to the union operation
    + implement the binary operator `~`, which corresponds to the concatenation
    operation
-   + implement the postfix operator `*`, which corresponds to the Kleene star operation
-   + implement the postfix operator `+`, which means "one or more repetitions of the
+   + implement the postfix operator `<*>`, which corresponds to the Kleene star operation
+   + implement the postfix operator `<+>`, which means "one or more repetitions of the
    preceding pattern"
    + implement the repetition operator `{n}` which means "`n` repetitions of the
    preceding pattern"
