@@ -1,7 +1,7 @@
 [EmailRegex]: http://emailregex.com/
 [Unicode]: https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane
 [Kleene]: https://en.wikipedia.org/wiki/Kleene_star
-[Teams]: https://github.com/hmc-cs111-spring2016/regular-expressions/wiki/Peer-review
+[Teams]: https://github.com/hmc-cs111-fall2016/regular-expressions/wiki/Peer-review
 
 
 # Implementing an internal DSL: regular expressions
