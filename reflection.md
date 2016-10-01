@@ -6,8 +6,7 @@
 
 ## Which operators were most difficult to implement and why?
 
-Making the implicit string2regex was a little more challenging because I had to be conscious of the types I was dealing with. I knew the overall strategy, but I tried too hard to make it a one-liner. However, putting all the functionality on one line made it difficult to debug, especially since types didn't implicitly convert when I wanted them to. I realize now that I could've written string2regex in one line, but it would be too long, so I split it up into readable sections.
-
+Making the implicit `string2regex` was challenging because I had to be conscious of the types I was dealing with. I knew the overall strategy, but I tried too hard to make it a one-liner. However, putting all the functionality on one line made it difficult to debug, especially since types didn't implicitly convert when I wanted them to. I realize now that I could've written string2regex in one line, but it would be too long, so I split it up into readable sections.
 
 ## Comment on the design of this internal DSL
 

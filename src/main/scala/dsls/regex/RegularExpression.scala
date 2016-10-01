@@ -1,6 +1,6 @@
 package dsls.regex
 
-import scala.language.implicitConversions
+import scala.language.{implicitConversions, postfixOps}
 
 /**
  * Modify this file to implement an internal DSL for regular expressions. 
@@ -21,22 +21,26 @@ abstract class RegularExpression {
   // Kleene star - zero or more regex repetitions. Parameter-less method
   def <*> = Star(this)
 
-  def <+> = this ~ this<*>
+  // One or more repetitions
+  def <+> = this ~ (this<*>)
+
+  // Returns n repetitions of the preceding pattern
+  // each repetition is filled in a list, then concatenated to the overall regex
+  def apply(n: Int) = {
+    val e: RegularExpression = EPSILON
+    List.fill(n)(this).foldLeft(e)(Concat)
+  }
 }
 
 object RegularExpression {
   implicit def char2Regex(ch: Char): RegularExpression = Literal(ch)
-  implicit def char2Regex(ch: Char)(n: =>Int): RegularExpression = ch.toString * n
 
   // for each character, concatenate it to the overall regex
   implicit def string2Regex(s: String): RegularExpression = {
-    val charArray: Array[RegularExpression] = s.toCharArray.map(Literal)
+    val chars: Array[RegularExpression] = s.toCharArray.map(Literal)
     val e: RegularExpression = EPSILON
-    charArray.foldLeft(e)(Concat)
+    chars.foldLeft(e)(Concat)
   }
-
-  implicit def regexTimesN(rx: RegularExpression)(n: Int): RegularExpression =
-    (1 to n).foldLeft(rx)((result, _) => Concat(result, rx))
 
 }
 

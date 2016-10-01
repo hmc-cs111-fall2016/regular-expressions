@@ -113,53 +113,42 @@ object Program extends App {
 
   require(cThree matches "ccc")
 
-//  /****************************************************************************
-//   * Additional pattern
-//   * Once you've added all the operators, it should be possible to replace
-//   * the following several definitions with:
-//   *   val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
-//   ***************************************************************************/
-//  val aStar = Star(Literal('a'))
-//  val bPlus = Concat(Literal('b'), Star(Literal('b')))
-//  val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
-//
-//  require(pattern matches "42")
-//  require(pattern matches "bccc")
-//  require(pattern matches "abccc")
-//  require(pattern matches "aabccc")
-//  require(pattern matches "aabbccc")
-//  require(pattern matches "aabbbbccc")
-//
-//   /****************************************************************************
-//   * Additional pattern
-//   *
-//   * Once you've added all the operators, it should be possible to replace
-//   * the following several definitions with:
-//   *   val helloworld = ("hello" <*>) ~ "world"
-//   ***************************************************************************/
-//  val hello = Concat(Literal('h'), Concat(Literal('e'), Concat(Literal('l'),
-//              Concat(Literal('l'), Literal('o')))))
-//
-//  val world = Concat(Literal('w'), Concat(Literal('o'), Concat(Literal('r'),
-//              Concat(Literal('l'), Literal('d')))))
-//
-//  val helloworld = Concat(Star(hello), world)
-//
-//  require(helloworld matches "helloworld")
-//  require(helloworld matches "world")
-//  require(helloworld matches "hellohelloworld")
-//
-//   /****************************************************************************
-//   * Additional pattern
-//   *
-//   * Once you've added all the operators, it should be possible to replace
-//   * the following several definitions with:
-//   *   val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
-//   ***************************************************************************/
-//  val threeDigits = Concat(digit, Concat(digit, digit))
-//  val fourDigits = Concat(threeDigits, digit)
-//  val areaCode = Concat(Literal('('), Concat(threeDigits, Literal(')')))
-//  val telNumber = Concat(areaCode, Concat(threeDigits, Concat(Literal('-'), fourDigits)))
-//
-//  require(telNumber matches "(202)456-1111")
+  /****************************************************************************
+   * Additional pattern
+   * Once you've added all the operators, it should be possible to replace
+   * the following several definitions with:
+   *   val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
+   ***************************************************************************/
+  val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
+
+  require(pattern matches "42")
+  require(pattern matches "bccc")
+  require(pattern matches "abccc")
+  require(pattern matches "aabccc")
+  require(pattern matches "aabbccc")
+  require(pattern matches "aabbbbccc")
+
+   /****************************************************************************
+   * Additional pattern
+   *
+   * Once you've added all the operators, it should be possible to replace
+   * the following several definitions with:
+   *   val helloworld = ("hello" <*>) ~ "world"
+   ***************************************************************************/
+  val helloworld = ("hello" <*>) ~ "world"
+
+  require(helloworld matches "helloworld")
+  require(helloworld matches "world")
+  require(helloworld matches "hellohelloworld")
+
+   /****************************************************************************
+   * Additional pattern
+   *
+   * Once you've added all the operators, it should be possible to replace
+   * the following several definitions with:
+   *   val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
+   ***************************************************************************/
+  val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
+
+  require(telNumber matches "(202)456-1111")
 }
