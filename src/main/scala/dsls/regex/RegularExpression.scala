@@ -22,7 +22,7 @@ abstract class RegularExpression {
   def <*> = Star(this)
 
   // One or more repetitions
-  def <+> = this ~ (this<*>)
+  def <+> = this ~ (this <*>)
 
   // Returns n repetitions of the preceding pattern
   // each repetition is filled in a list, then concatenated to the overall regex
