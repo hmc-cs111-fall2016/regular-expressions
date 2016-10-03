@@ -44,7 +44,7 @@ object Program extends App {
   require(answer matches "42")
               
   /****************************************************************************
-   * TODO: Add the union operator for regular expressions
+   * Add the union operator for regular expressions
    * 
    * Make it possible to replace the definition of digit with:
    *   val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
@@ -63,7 +63,7 @@ object Program extends App {
   require(digit matches "9")      
 
   /****************************************************************************
-   * TODO: Add the concatenation operator for regular expressions
+   * Add the concatenation operator for regular expressions
    * 
    * Make it possible to replace the definition of digit with:
    *   val pi = '3' ~ '1' ~ '4'
@@ -78,7 +78,7 @@ object Program extends App {
    * Make it possible to replace the definition of zeroOrMoreDigits with:
    *   val zeroOrMoreDigits = digit <*>
    ***************************************************************************/
-  val zeroOrMoreDigits = Star(digit)
+  val zeroOrMoreDigits = digit <*>
   
   require(zeroOrMoreDigits matches "")
   require(zeroOrMoreDigits matches "0")
