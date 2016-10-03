@@ -22,7 +22,7 @@ abstract class RegularExpression {
   def <*> = Star(this)
 
   /** Returns a regular expression consisting of one or more of `this`*/
-  def <+> = Concat(this, Star(this))
+  def <+> = this ~ (this <*>)
 
   /** Returns a regular expression consisting of n copies of `this`
   For example 'ab'{3} matches 'ababab' */
@@ -30,7 +30,7 @@ abstract class RegularExpression {
   	if (n == 0)
   		EPSILON
   	else
-  		Concat(this, this(n-1))
+  		this ~ this(n-1)
   }
 }
 
@@ -69,7 +69,7 @@ object RegularExpression {
 			str.head
 		else
 			/* recursively calls the implicit conversion of str.tail*/
-			Concat(str.head, str.tail)
+			str.head ~ str.tail
 	}
 }
 

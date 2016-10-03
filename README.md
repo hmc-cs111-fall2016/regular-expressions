@@ -196,6 +196,6 @@ Here are some suggestions for critiques:
 - [x] Implement the postfix operator `*`.
 - [x] Implement the postfix operator `+`.
 - [x] Implement the repetition operator `{n}`.
-- [ ] Write responses in `reflection.md`.
-- [ ] Submit your work.
+- [x] Write responses in `reflection.md`.
+- [x] Submit your work.
 - [ ] Comment on your [critique partners'][Teams] work.
