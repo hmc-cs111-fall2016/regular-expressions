@@ -37,7 +37,7 @@ abstract class RegularExpression {
 
 /** Regular expression companion object to implicit conversions */
 object RegularExpression { 
-  implicit def string2literal(s: String) = s.foldRight(EPSILON: RegularExpression)({(l, acc) => Concat(Literal(l), acc)})
+  implicit def string2regularExpression(s: String) = s.foldRight(EPSILON: RegularExpression)({(l, acc) => Concat(Literal(l), acc)})
   implicit def char2literal(c: Char) = Literal(c)
 }
 
