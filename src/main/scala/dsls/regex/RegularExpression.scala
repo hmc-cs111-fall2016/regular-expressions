@@ -1,7 +1,6 @@
 package dsls.regex
 
 import scala.language.implicitConversions
-import scala.language.postfixOps
 
 /**
  * Modify this file to implement an internal DSL for regular expressions. 
@@ -25,6 +24,11 @@ abstract class RegularExpression {
   // Postfix operator for Star
   def <*> = Star(this)
 
+  /** Postfix operator <+>, 
+   *  which means "one or more repetitions" of the expression.
+   */
+  def <+> = this ~ this<*>
+  
 }
 
 /** a regular expression that matches nothing */

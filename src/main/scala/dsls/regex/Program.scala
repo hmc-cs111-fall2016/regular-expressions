@@ -1,5 +1,7 @@
 package dsls.regex
 
+import scala.language.postfixOps
+
 object Program extends App {
 
   import RegularExpression._
@@ -73,7 +75,7 @@ object Program extends App {
   require(pi matches "314")
   
   /****************************************************************************
-   * TODO: Add the star operator for regular expressions
+   * Add the star operator for regular expressions
    * 
    * Make it possible to replace the definition of zeroOrMoreDigits with:
    *   val zeroOrMoreDigits = digit <*>
@@ -92,7 +94,7 @@ object Program extends App {
    * Make it possible to replace the definition of number with:
    *   val number = digit <+> 
    ***************************************************************************/
-  val number = Concat(digit, zeroOrMoreDigits)
+  val number = digit <+>
   
   require(!(number matches ""))
   require(number matches "0")
