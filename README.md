@@ -87,15 +87,15 @@ This repository contains some starter code. The most important pieces are:
 
 **`RegularExpression.scala`** This file defines data structures that correspond
 to the different kinds of regular languages described above. You'll modify this
-file to write your DSL. The final version should look like 
-[this](https://github.com/hmc-cs111-fall2016/practice-scala/wiki/Final-program).
+file to write your DSL.
 
 **`Program.scala`** A program that uses the data structures in
 `RegularExpresion.scala` to build descriptions of regular expressions, then
 match strings against those expressions. This program compiles and runs
 correctly as-is, but it's clunky: it uses the data structures from the
 regular expression library but it's not very DSL-y. Your job is to modify this
-file to use your DSL instead.
+file to use your DSL instead.  The final version should look like 
+[this](https://github.com/hmc-cs111-fall2016/practice-scala/wiki/Final-program).
 
 There are a couple of other pieces of code provided:
 
