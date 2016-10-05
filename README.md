@@ -188,14 +188,14 @@ Here are some suggestions for critiques:
    you disagree?
 
 ## Tasks
-- [ ] Read the assignment.
-- [ ] Implement literal extension for characters.
-- [ ] Implement literal extension for strings.
-- [ ] Implement the binary operator `||`.
-- [ ] Implement the binary operator `~`.
-- [ ] Implement the postfix operator `*`.
-- [ ] Implement the postfix operator `+`.
-- [ ] Implement the repetition operator `{n}`.
-- [ ] Write responses in `reflection.md`.
-- [ ] Submit your work.
+- [x] Read the assignment.
+- [x] Implement literal extension for characters.
+- [x] Implement literal extension for strings.
+- [x] Implement the binary operator `||`.
+- [x] Implement the binary operator `~`.
+- [x] Implement the postfix operator `*`.
+- [x] Implement the postfix operator `+`.
+- [x] Implement the repetition operator `{n}`.
+- [x] Write responses in `reflection.md`.
+- [x] Submit your work.
 - [ ] Comment on your [critique partners'][Teams] work.
