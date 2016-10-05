@@ -28,3 +28,21 @@ On the other hand, it seems that it is fairly difficult to write regular express
 ```
 val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
 ```
+
+This code made me a bit sad because there is an obvious pattern, but we were forced to union 10 literals. In general, union and concatenation operations can create clunky regular expressions. Not that they by themselves are bothersome, but when things get cumbersome, I believe these two operations are deeply involved.
+
+Another trait about our DSL that slightly bothers me is how we have to explicitly use parentheses to correctly express our regular expression:
+
+```
+val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
+```
+
+In this code, we are forced to put three pairs of parentheses to write this regular expression. It would be interesting to see if we can create some sort of rules that allows us to remove parentheses. Some parentheses can be good for clarifying the regular expressions, but for those that seem redundant, removing parentheses could be nice.
+
+Besides removing parentheses, there are two other things I would consider changing. One is to further simplify the syntax of the DSL. For example, it would be nice to write just a `*` in front of a regular expression like
+```
+("42" || "6")*
+```
+to 
+
+I would like to mention that this change is probably not possible in Scala.
