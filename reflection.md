@@ -5,7 +5,7 @@
 Union, concatenation, and star operators were the easiest to implement. This is because there were functions already in the regex library that did these operations. As a result, the operators are just simple wrappers around a function.
 
 ## Which operators were most difficult to implement and why?
-The other operators <+> and {n} were harder to implement. <+> is an operator not in the regex library and required a bit of thought to write the operator. The {n} was the hardest because it required using the apply function. From there, I had a bit of difficulty using recursion, so I used a for loop to implement it.
+The other operators `<+>` and `{n}` were harder to implement. `<+>` is an operator not in the regex library and required a bit of thought to write the operator. The `{n}` was the hardest because it required using the apply function. From there, I had a bit of difficulty using recursion, so I used a for loop to implement it.
 
 ## Comment on the design of this internal DSL
 
@@ -21,7 +21,7 @@ Write a few brief paragraphs that discuss:
    identifiers prevent...")
 
 
-The easiest things to say are things with repetition. For me, regular expressions can be strong when using union operators with the Kleene star. One can then specify patterns that can be arbitrarily long (with the Kleene star) and relatively complex using the union operator within the Kleene star. In fact, the family of operators <*>, <+>, and {n} are all related to doing things with repetition. As a result, we can be very specific about our repetitions.
+The easiest things to say are things with repetition. For me, regular expressions can be strong when using union operators with the Kleene star. One can then specify patterns that can be arbitrarily long (with the Kleene star) and relatively complex using the union operator within the Kleene star. In fact, the family of operators `<*>`, `<+>`, and `{n}` are all related to doing things with repetition. As a result, we can be very specific about our repetitions.
 
 On the other hand, it seems that it is fairly difficult to write regular expressions when there are patterns that aren't easily represented using repetition. For example, the code we were given had the following example:
 
@@ -43,6 +43,6 @@ Besides removing parentheses, there are two other things I would consider changi
 ```
 ("42" || "6")*
 ```
-to 
+to say I want 0 or more copies of what is inside the parentheses. However, I would like to mention that this change is probably not possible in Scala. It would probably be fairly difficult or impossible) to get Scala to recognize the `*` operator in the code above.
 
-I would like to mention that this change is probably not possible in Scala.
+The second thing 
