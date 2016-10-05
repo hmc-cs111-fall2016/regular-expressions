@@ -54,4 +54,4 @@ val = (Integers from 1 to 8)
 
 where the value inside the parentheses is supposed to represent any digits from 1 to 8.
 
-The last thing I was thinking about was having support to not include certain expressions in a regular expression. For example, it would be nice to able modify `digit` so that it contains all digits 1-9 not including 3, 4, and 7.
+The last thing I was thinking about was having support to not include certain expressions in a regular expression. For example, it would be nice to able modify `digit` so that it contains all digits 1-9 not including 3, 4, and 7. This was just a side thought however, so I don't want to elaborate on this idea too much. I'd hypothesize, however, that it might be difficult to implement into the DSL.
