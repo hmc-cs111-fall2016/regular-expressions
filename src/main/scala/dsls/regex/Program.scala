@@ -103,7 +103,7 @@ object Program extends App {
   require(number matches "987651234")
 
   /****************************************************************************
-   * TODO: Add the repetition operator for regular expressions
+   * Add the repetition operator for regular expressions
    * 
    * Make it possible to replace the definition of cThree with:
    *    val cThree = 'c'{3}
@@ -118,10 +118,8 @@ object Program extends App {
    * the following several definitions with:
    *   val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
    ***************************************************************************/
-  val aStar = Star(Literal('a'))
-  val bPlus = Concat(Literal('b'), Star(Literal('b')))
-  val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
-  
+  val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
+
   require(pattern matches "42")
   require(pattern matches "bccc")
   require(pattern matches "abccc")
@@ -136,14 +134,8 @@ object Program extends App {
    * the following several definitions with:
    *   val helloworld = ("hello" <*>) ~ "world"
    ***************************************************************************/
-  val hello = Concat(Literal('h'), Concat(Literal('e'), Concat(Literal('l'), 
-              Concat(Literal('l'), Literal('o'))))) 
-  
-  val world = Concat(Literal('w'), Concat(Literal('o'), Concat(Literal('r'), 
-              Concat(Literal('l'), Literal('d'))))) 
+  val helloworld = ("hello" <*>) ~ "world"
 
-  val helloworld = Concat(Star(hello), world)
-  
   require(helloworld matches "helloworld")
   require(helloworld matches "world")
   require(helloworld matches "hellohelloworld")
@@ -155,10 +147,7 @@ object Program extends App {
    * the following several definitions with:
    *   val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
    ***************************************************************************/
-  val threeDigits = Concat(digit, Concat(digit, digit))
-  val fourDigits = Concat(threeDigits, digit)
-  val areaCode = Concat(Literal('('), Concat(threeDigits, Literal(')')))
-  val telNumber = Concat(areaCode, Concat(threeDigits, Concat(Literal('-'), fourDigits)))
+  val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
   
   require(telNumber matches "(202)456-1111")
 }
