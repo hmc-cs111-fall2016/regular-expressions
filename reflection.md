@@ -22,3 +22,9 @@ Write a few brief paragraphs that discuss:
 
 
 The easiest things to say are things with repetition. For me, regular expressions can be strong when using union operators with the Kleene star. One can then specify patterns that can be arbitrarily long (with the Kleene star) and relatively complex using the union operator within the Kleene star. In fact, the family of operators <*>, <+>, and {n} are all related to doing things with repetition. As a result, we can be very specific about our repetitions.
+
+On the other hand, it seems that it is fairly difficult to write regular expressions when there are patterns that aren't easily represented using repetition. For example, the code we were given had the following example:
+
+```
+val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
+```
