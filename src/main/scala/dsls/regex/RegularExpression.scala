@@ -1,5 +1,7 @@
 package dsls.regex
 
+import scala.language.implicitConversions
+
 /**
  * Modify this file to implement an internal DSL for regular expressions. 
  * 
@@ -11,6 +13,32 @@ package dsls.regex
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+
+  /** returns a regular expression matching either of its subexpressions */
+  def ||(other: RegularExpression) = Union(this, other)
+
+  /** returns a regular expression matching the left expression followed by the
+   *  right
+   */
+  def ~(other: RegularExpression) = Concat(this, other)
+
+  /** returns a regular expression matching 0 or more repetitions of the
+   *  subexpression
+   */
+  def <*> = Star(this)
+
+  /** returns a regular expression matching 1 or more repetitions of the
+   *  subexpression
+   */
+  def <+> = Concat(this, Star(this))
+
+  /** returns a regular expression matching exactly n repetitions of the
+   *  subexpression
+   */
+  def apply(n: Int):RegularExpression = if (n == 0)
+                                          EPSILON
+                                        else
+                                          Concat(this, this{n-1})
 }
 
 /** a regular expression that matches nothing */
@@ -34,3 +62,15 @@ case class Concat(val left: RegularExpression, val right: RegularExpression)
  *  expression
  */
 case class Star(val expression: RegularExpression) extends RegularExpression
+
+object RegularExpression {
+  /** Conversion from Char to RegularExpression */
+  implicit def char2regex(c: Char): Literal = Literal(c)
+  
+  /** Conversion from String to RegularExpression */
+  implicit def string2regex(s: String): RegularExpression = if (s.isEmpty)
+                                                              EPSILON
+                                                            else
+                                                              Concat(s.head,
+                                                                     s.tail)
+}
