@@ -39,7 +39,7 @@ val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
 
 In this code, we are forced to put three pairs of parentheses to write this regular expression. It would be interesting to see if we can create some sort of rules that allows us to remove parentheses. Some parentheses can be good for clarifying the regular expressions, but for those that seem redundant, removing parentheses could be nice.
 
-Besides removing parentheses, there are two other things I would consider modifying. One is to further simplify the syntax of the DSL. For example, it would be nice to write just a `*` in front of a regular expression like:
+Besides removing parentheses, there are three other things I would consider modifying. One is to further simplify the syntax of the DSL. For example, it would be nice to write just a `*` in front of a regular expression like:
 
 ```
 ("42" || "6")*
@@ -52,4 +52,6 @@ The second thing is to implement some sort of pattern generation within regular 
 val = (Integers from 1 to 8)
 ```
 
-where the value inside the parentheses is supposed to represent any digits from 1 to 8. 
+where the value inside the parentheses is supposed to represent any digits from 1 to 8.
+
+The last thing I was thinking about was having support to not include certain expressions in a regular expression. For example, it would be nice to able modify `digit` so that it contains all digits 1-9 not including 3, 4, and 7.
