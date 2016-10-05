@@ -73,7 +73,7 @@ object Program extends App {
   val pi = '3' ~ '1' ~ '4'
 
   require(pi matches "314")
-  
+
   /****************************************************************************
    * Add the star operator for regular expressions
    * 
@@ -89,7 +89,7 @@ object Program extends App {
   require(zeroOrMoreDigits matches "987651234")
   
   /****************************************************************************
-   * TODO: Add the plus operator for regular expressions
+   * Add the plus operator for regular expressions
    * 
    * Make it possible to replace the definition of number with:
    *   val number = digit <+> 
@@ -108,7 +108,7 @@ object Program extends App {
    * Make it possible to replace the definition of cThree with:
    *    val cThree = 'c'{3}
    ***************************************************************************/
-  val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
+  val cThree = 'c'{3}
   
   require(cThree matches "ccc")
   

@@ -1,6 +1,7 @@
 package dsls.regex
 
 import scala.language.implicitConversions
+import scala.language.postfixOps
 
 /**
  * Modify this file to implement an internal DSL for regular expressions. 
@@ -29,6 +30,17 @@ abstract class RegularExpression {
    */
   def <+> = this ~ this<*>
   
+  /** The repetition operator r{n},
+   *  for a RegularExpression r.
+   *  Takes in an integer n > 0.
+   *  Concatenates n copies of the regular expression together.
+   *  Should be called using curly braces.
+   */
+  def apply(n: Int): RegularExpression = 
+    if (n == 1) 
+      this
+    else
+      Concat(this, apply(n-1))
 }
 
 /** a regular expression that matches nothing */
