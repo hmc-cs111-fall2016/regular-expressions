@@ -2,7 +2,10 @@
 
 ## Which operators were easiest to implement and why?
 
+Union, concatenation, and star operators were the easiest to implement. This is because there were functions already in the regex library that did these operations. As a result, the operators are just simple wrappers around a function.
+
 ## Which operators were most difficult to implement and why?
+The other operators <+> and {n} were harder to implement. <+> is an operator not in the regex library and required a bit of thought to write the operator. The {n} was the hardest because it required using the apply function. From there, I had a bit of difficulty using recursion, so I used a for loop to implement it.
 
 ## Comment on the design of this internal DSL
 
