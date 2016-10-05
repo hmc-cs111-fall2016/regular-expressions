@@ -12,27 +12,31 @@ abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
 
+  /** returns a regular expression matching either one sub-expression or another */  
   def ||(other: RegularExpression) = Union(this, other)
 
+  /** returns a regular expression matching one sub-expression followed by another */  
   def ~(other: RegularExpression) = Concat(this, other)
 
+  /** returns a regular expression matching zero or more repetitions of the expression */  
   def <*> = Star(this)
 
+  /** returns a regular expression matching one or more repetitions of the expression */  
   def <+> = {
   	val zeroOrMoreDigits = Star(this)
   	Concat(this, zeroOrMoreDigits)
   }
 
+  /** returns a regular expression matching n repetitions of the expression */  
   def apply(n: Int): RegularExpression = {
   	if(n==0) EPSILON
   	else Concat(this, this{n-1})
   }
-  
+
 
 }
 
 object RegularExpression{
-
 	implicit def charToLiteral(c : Char) = Literal(c)
 	implicit def stringToRegex(s: String): RegularExpression = charListHelper(s.toList)
 
