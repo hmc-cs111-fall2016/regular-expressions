@@ -39,10 +39,17 @@ val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
 
 In this code, we are forced to put three pairs of parentheses to write this regular expression. It would be interesting to see if we can create some sort of rules that allows us to remove parentheses. Some parentheses can be good for clarifying the regular expressions, but for those that seem redundant, removing parentheses could be nice.
 
-Besides removing parentheses, there are two other things I would consider changing. One is to further simplify the syntax of the DSL. For example, it would be nice to write just a `*` in front of a regular expression like
+Besides removing parentheses, there are two other things I would consider modifying. One is to further simplify the syntax of the DSL. For example, it would be nice to write just a `*` in front of a regular expression like:
+
 ```
 ("42" || "6")*
 ```
 to say I want 0 or more copies of what is inside the parentheses. However, I would like to mention that this change is probably not possible in Scala. It would probably be fairly difficult or impossible) to get Scala to recognize the `*` operator in the code above.
 
-The second thing 
+The second thing is to implement some sort of pattern generation within regular expressions. From the example above that takes the union of 10 literals 9 times, it might be nice to have something like a generator or a declarative approach that creates the values we want like in the following line:
+
+```
+val = (Integers from 1 to 8)
+```
+
+where the value inside the parentheses is supposed to represent any digits from 1 to 8. 
