@@ -19,3 +19,6 @@ Write a few brief paragraphs that discuss:
    implementing it? (You don't have to write code for this part. You could say
    "I would use literal extension to..." or "Scala's rules for valid
    identifiers prevent...")
+
+
+The easiest things to say are things with repetition. For me, regular expressions can be strong when using union operators with the Kleene star. One can then specify patterns that can be arbitrarily long (with the Kleene star) and relatively complex using the union operator within the Kleene star. In fact, the family of operators <*>, <+>, and {n} are all related to doing things with repetition. As a result, we can be very specific about our repetitions.
