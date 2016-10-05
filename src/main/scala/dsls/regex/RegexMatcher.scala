@@ -1,12 +1,27 @@
 package dsls.regex
 
+import scala.language.implicitConversions
+
 object RegexMatcher {
+  import RegularExpression._   // might as well take advantage of the DSL :)
+  
+  // add a bit more DSL-ness (this definitely crosses the border of ridiculous)
+  // but it lets us say:
+  //    ε ∈ language
+  // and
+  //    ε ∉ language
+  object EpsilonChecker {
+    def ∈(language: RegularExpression) = matchesEpsilon(language)
+    def ∉(language: RegularExpression) = !(matchesEpsilon(language)) 
+  }
+  implicit def epsilonToChecker(e: ε.type) = EpsilonChecker
+  
   /**
    * returns true if the given string matches the given pattern
    */
   def matches(string: String, pattern: RegularExpression): Boolean = 
     if (string.isEmpty)
-      matchesEpsilon(pattern)
+      ε ∈ pattern
     else 
       matches(string.tail, ∂(string.head, pattern))      
 
@@ -23,32 +38,32 @@ object RegexMatcher {
    *     
    *     ∂c( {d} ) = {ε} if c = d; ∅ otherwise
    *     
-   *     ∂c( L1 ∪ L2 ) = ∂c( L1 ) ∪ ∂c( L2 )
+   *     ∂c( l1 ∪ l2 ) = ∂c( l1 ) ∪ ∂c( l2 )
    *     
-   *     ∂c( L1 ⋅ L2 ) = ∂c( L1 ) ⋅ L2              if ε ∉ L1 
-   *                    (∂c( L1 ) ⋅ L2) ∪ ∂c( L2 )  otherwise
+   *     ∂c( l1 ⋅ l2 ) = ∂c( l1 ) ⋅ l2              if ε ∉ l1 
+   *                    (∂c( l1 ) ⋅ l2) ∪ ∂c( l2 )  otherwise
    *                    
-   *     ∂c( L* ) = ∂c( L ) ⋅ L*
+   *     ∂c( l* ) = ∂c( l ) ⋅ l*
    */
   def ∂(c: Char, pattern: RegularExpression): RegularExpression = 
     pattern match {
-        case EMPTY | EPSILON ⇒ EMPTY        
-        case Literal(d)      ⇒ if (c == d) EPSILON else EMPTY
-        case Union(l1, l2)   ⇒ Union(∂(c, l1), ∂(c, l2))
-        case Concat(l1, l2)  ⇒ if (!matchesEpsilon(l1)) 
-                                  Concat(∂(c, l1), l2)
+        case `∅` | `ε`       ⇒ ∅        
+        case Literal(d)      ⇒ if (c == d) ε else ∅
+        case l1 ∪ l2         ⇒ ∂(c, l1) ∪ ∂(c, l2)
+        case l1 ⋅ l2         ⇒ if (ε ∉ l1)
+                                  ∂(c, l1) ⋅ l2
                                 else
-                                  Union(Concat(∂(c, l1),  l2), ∂(c, l2))
-        case Star(expr)      ⇒ Concat(∂(c, expr),  pattern)
+                                  (∂(c, l1) ⋅ l2) ∪ ∂(c, l2)
+        case Star(l)         ⇒ ∂(c, l) ⋅ pattern
     }
 
   /**
    * returns true if the empty string matches the pattern
    */
   def matchesEpsilon(pattern: RegularExpression): Boolean = pattern match {
-    case EPSILON | Star(_) ⇒ true
-    case Union(a, b)   ⇒ matchesEpsilon(a) || matchesEpsilon(b)
-    case Concat(a, b)  ⇒ matchesEpsilon(a) && matchesEpsilon(b)
+    case `ε` | Star(_) ⇒ true
+    case a ∪ b         ⇒ (ε ∈ a) || (ε ∈ b)
+    case a ⋅ b         ⇒ (ε ∈ a) && (ε ∈ b)
     case _             ⇒ false
   }
 }
