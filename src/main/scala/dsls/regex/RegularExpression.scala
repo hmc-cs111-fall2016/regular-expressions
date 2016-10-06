@@ -1,16 +1,23 @@
 package dsls.regex
 
-/**
- * Modify this file to implement an internal DSL for regular expressions. 
- * 
- * You're allowed to add anything you want to this file, but you're not allowed
- * to *remove* anything that currently appears in the file.
- */
+import scala.language.implicitConversions
 
 /** The top of a class hierarchy that encodes regular expressions. */
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+  
+  /** Our syntatic sugar functions to let the user use
+   *    ||, ~, <*>, <+>, and {}
+   *  as makes sense to our user. For {}, we use apply
+   *  because Scala must have a 
+   */
+  def ||(right: RegularExpression) = Union(this, right)
+  def ~(right: RegularExpression) = Concat(this, right)
+  def <*> = Star(this)
+  def <+> = Concat(this, Star(this))
+  def apply(i: Int):RegularExpression =
+    if (i == 0) EPSILON else Concat(this, this.apply(i-1))
 }
 
 /** a regular expression that matches nothing */
@@ -34,3 +41,11 @@ case class Concat(val left: RegularExpression, val right: RegularExpression)
  *  expression
  */
 case class Star(val expression: RegularExpression) extends RegularExpression
+
+/** the implicit definitions to add syntatic sugar so that Chars and Strings
+    can be used as regular expressions*/
+object ExpressionImplicits {
+  implicit def char2literal(c: Char): Literal = Literal(c)
+  implicit def string2literal (s: String): RegularExpression =
+    if (s.length == 0) EPSILON else Concat(Literal(s.charAt(0)), s.substring(1))
+}
