@@ -15,16 +15,30 @@ what it looks like to Scala. So, we had to use a special property of Scala to be
 able to write this.
 
 ## Comment on the design of this internal DSL
-In this DSL, it works very well to 
+In this DSL, it works very well to write languages of characters and strings. It's
+also rather easy to develop sets of regular expressions. Additionally, it's very easy
+to check these sets against specific members of the set thanks to RegexMatcher.
 
-Write a few brief paragraphs that discuss:
-   + What works about this design? (For example, what things seem easy and
-   natural to say, using the DSL?)
-   + What doesn't work about this design? (For example, what things seem
-   cumbersome to say?)
-   + Think of a syntactic change that might make the language better. How would
-   you implement it _or_ what features of Scala would prevent you from
-   implementing it? (You don't have to write code for this part. You could say
-   "I would use literal extension to..." or "Scala's rules for valid
-   identifiers prevent...")
-   
+Currently, it's still rather cumbersome to use the star operator or the plus operator.
+Both of these require `<>` and personally I am more used to seeing these functions without
+the `<>`, which is also evident in how it is used in the README file when introducing
+regular expressions. It may be possible to use the `*` and `+` operators, although rather
+difficult because Char and String already have the `*` and `+` operators built in with
+other uses, so we may run into some errors if we try to implement `*` and `+` instead of
+`<*>` and `<+>`. This is because if we wrote `'c'*` it would be expecting another
+argument to match the case of a Char with a star opertor after it, so I don't think
+that Scala would allow this.
+
+Additionally, it's still somewhat cumbersome to define a regular language quickly.
+For each element, you would have to union every one and then star. 
+So, even a regular language over the alphabet `'0'` and `'1'` is
+`('0' || '1') <*> `. This should be easier to have with syntatic sugar. I'm not exactly
+what the most natural way to describe a regular language would be, but Scala would
+definitely allow it because we can have an arbitrary number of inputs, which would be
+the letters of the alphabet. Internally, we could union each of the regular expressions
+and then take the `<*>` of all of them together. I would choose all the inputs to be chars
+so that we would have an alphabet as defined in the writeup. The one issue would be that
+we could not take regular expressions as a part of the alphabet, but I think that would
+prevent the user from giving it weird "alphabets" where the regular expressions given
+were not actually characters. I'm not certain what I would call this method to make it
+the most natural for users, but I think it would be useful.
