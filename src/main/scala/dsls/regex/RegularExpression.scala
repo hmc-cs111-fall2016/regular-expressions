@@ -1,5 +1,7 @@
 package dsls.regex
 
+import scala.language.{implicitConversions, postfixOps}
+
 /**
  * Modify this file to implement an internal DSL for regular expressions. 
  * 
@@ -11,6 +13,35 @@ package dsls.regex
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+
+  def ||(that: RegularExpression) = Union(this, that)
+
+  def ~(that: RegularExpression) = Concat(this, that)
+
+  // Kleene star - zero or more regex repetitions. Parameter-less method
+  def <*> = Star(this)
+
+  // One or more repetitions
+  def <+> = this ~ (this <*>)
+
+  // Returns n repetitions of the preceding pattern
+  // each repetition is filled in a list, then concatenated to the overall regex
+  def apply(n: Int) = {
+    val e: RegularExpression = EPSILON
+    List.fill(n)(this).foldLeft(e)(Concat)
+  }
+}
+
+object RegularExpression {
+  implicit def char2Regex(ch: Char): RegularExpression = Literal(ch)
+
+  // for each character, concatenate it to the overall regex
+  implicit def string2Regex(s: String): RegularExpression = {
+    val chars: Array[RegularExpression] = s.toCharArray.map(Literal)
+    val e: RegularExpression = EPSILON
+    chars.foldLeft(e)(Concat)
+  }
+
 }
 
 /** a regular expression that matches nothing */
