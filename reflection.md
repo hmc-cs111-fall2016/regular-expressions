@@ -64,3 +64,7 @@ Concatenated `Literal`s.
     1. some operator(s) that would allow representation of all characters/common 
     patterns/sets, and 
     2. a negation operator
+
+   I feel that neither of these should be particularly challenging in Scala, and
+   should be a matter of adding more case classes in the IR component to handle
+   them.
