@@ -25,6 +25,13 @@ abstract class RegularExpression {
     if (n == 0) EPSILON else this ~ this{n - 1}
 }
 
+object RegularExpression {
+  implitic def stringToRegex(str: String) = str.foldLeft(EPSILON: RegularExpression)({(l, acc) => Concat(Literal(l), acc)})
+
+  implicit def charToRegex(char: Char) = Literal(c)
+
+}
+
 /** a regular expression that matches nothing */
 object EMPTY extends RegularExpression
 
