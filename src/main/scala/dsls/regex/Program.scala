@@ -1,4 +1,7 @@
 package dsls.regex
+import scala.language.implicitConversions
+import scala.language.postfixOps
+ 
 
 object Program extends App {
   
@@ -9,16 +12,16 @@ object Program extends App {
    *   val zero = '0'
    * etc.
    ***************************************************************************/
-  val zero  = Literal('0')
-  val one   = Literal('1')
-  val two   = Literal('2')
-  val three = Literal('3')
-  val four  = Literal('4')
-  val five  = Literal('5')
-  val six   = Literal('6')
-  val seven = Literal('7')
-  val eight = Literal('8')
-  val nine  = Literal('9')
+  val zero  = '0'
+  val one   = '1'
+  val two   = '2'
+  val three = '3'
+  val four  = '4'
+  val five  = '5'
+  val six   = '6'
+  val seven = '7'
+  val eight = '8'
+  val nine  = '9'
   
   require(zero matches "0")
   require(one matches "1")
@@ -30,6 +33,7 @@ object Program extends App {
   require(seven matches "7")
   require(eight matches "8")
   require(nine matches "9")
+
   
   /****************************************************************************
    * TODO: Extend strings to support regular expressions
@@ -37,7 +41,7 @@ object Program extends App {
    * Make it possible to replace the definition of answer with:
    *   val answer = "42"
    ***************************************************************************/
-  val answer = Concat(four, two)
+  val answer = "42" // instead of Concat(four, two)
 
   require(answer matches "42")
               
@@ -47,8 +51,7 @@ object Program extends App {
    * Make it possible to replace the definition of digit with:
    *   val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
    ***************************************************************************/
-  val digit = Union(zero, Union(one, Union(two, Union(three, Union(four, 
-              Union(five, Union(six, Union(seven, Union(eight, nine)))))))))
+  val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
 
   require(digit matches "0")
   require(digit matches "1")
@@ -67,7 +70,7 @@ object Program extends App {
    * Make it possible to replace the definition of digit with:
    *   val pi = '3' ~ '1' ~ '4'
    ***************************************************************************/
-  val pi = Concat(Literal('3'), Concat(Literal('1'), Literal('4')))
+  val pi = '3' ~ '1' ~ '4'
 
   require(pi matches "314")
   
@@ -77,7 +80,7 @@ object Program extends App {
    * Make it possible to replace the definition of zeroOrMoreDigits with:
    *   val zeroOrMoreDigits = digit <*>
    ***************************************************************************/
-  val zeroOrMoreDigits = Star(digit)
+  val zeroOrMoreDigits = digit <*>
   
   require(zeroOrMoreDigits matches "")
   require(zeroOrMoreDigits matches "0")
@@ -91,8 +94,8 @@ object Program extends App {
    * Make it possible to replace the definition of number with:
    *   val number = digit <+> 
    ***************************************************************************/
-  val number = Concat(digit, zeroOrMoreDigits)
-  
+  val number = digit<+>
+  Concat (this, Star(this)) 
   require(!(number matches ""))
   require(number matches "0")
   require(number matches "9")
@@ -105,9 +108,13 @@ object Program extends App {
    * Make it possible to replace the definition of cThree with:
    *    val cThree = 'c'{3}
    ***************************************************************************/
-  val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
+ 
+  val cThree = 'c'{3}
   
   require(cThree matches "ccc")
+  require(!(cThree matches "cc"))
+  require(!(cThree matches "cccc"))
+  require(!(cThree matches " "))
   
   /****************************************************************************
    * Additional pattern
@@ -115,12 +122,11 @@ object Program extends App {
    * the following several definitions with:
    *   val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
    ***************************************************************************/
-  val aStar = Star(Literal('a'))
-  val bPlus = Concat(Literal('b'), Star(Literal('b')))
-  val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
+  val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
   
   require(pattern matches "42")
   require(pattern matches "bccc")
+  require(!(pattern matches "bccc42")
   require(pattern matches "abccc")
   require(pattern matches "aabccc")
   require(pattern matches "aabbccc")
@@ -133,13 +139,9 @@ object Program extends App {
    * the following several definitions with:
    *   val helloworld = ("hello" <*>) ~ "world"
    ***************************************************************************/
-  val hello = Concat(Literal('h'), Concat(Literal('e'), Concat(Literal('l'), 
-              Concat(Literal('l'), Literal('o'))))) 
-  
-  val world = Concat(Literal('w'), Concat(Literal('o'), Concat(Literal('r'), 
-              Concat(Literal('l'), Literal('d'))))) 
+ 
 
-  val helloworld = Concat(Star(hello), world)
+  val helloworld = ("hello" <*>) ~ "world"
   
   require(helloworld matches "helloworld")
   require(helloworld matches "world")
@@ -152,10 +154,10 @@ object Program extends App {
    * the following several definitions with:
    *   val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
    ***************************************************************************/
-  val threeDigits = Concat(digit, Concat(digit, digit))
-  val fourDigits = Concat(threeDigits, digit)
-  val areaCode = Concat(Literal('('), Concat(threeDigits, Literal(')')))
-  val telNumber = Concat(areaCode, Concat(threeDigits, Concat(Literal('-'), fourDigits)))
-  
+ val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
+ val telNumber = digit{5} ~ '-' ~ digit{4}
+ 
   require(telNumber matches "(202)456-1111")
+  require(areaCode matches "95047-2827")        
+          
 }
