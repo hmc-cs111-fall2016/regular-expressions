@@ -1,5 +1,5 @@
 package dsls.regex
-
+import LiteralImplicits._
 object Program extends App {
   
   /****************************************************************************
@@ -19,6 +19,7 @@ object Program extends App {
   val seven = Literal('7')
   val eight = Literal('8')
   val nine  = Literal('9')
+
   
   require(zero matches "0")
   require(one matches "1")
@@ -29,7 +30,8 @@ object Program extends App {
   require(six matches "6")
   require(seven matches "7")
   require(eight matches "8")
-  require(nine matches "9")
+  require(nine matches "7")
+
   
   /****************************************************************************
    * TODO: Extend strings to support regular expressions
