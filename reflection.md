@@ -16,7 +16,8 @@ able to write this.
 
 ## Comment on the design of this internal DSL
 In this DSL, it works very well to write languages of characters and strings. It's
-also rather easy to develop sets of regular expressions. Additionally, it's very easy
+also rather easy to develop small sets of regular expressions or expressions based
+on one letter or short phrase, such as `'a'` or `"ab"`. Additionally, it's very easy
 to check these sets against specific members of the set thanks to RegexMatcher.
 
 Currently, it's still rather cumbersome to use the star operator or the plus operator.
